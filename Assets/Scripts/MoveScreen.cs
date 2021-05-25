@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MoveScreen : MonoBehaviour
 {
+    CameraMove camMoveScript;
+
     public enum BorderType
     {
         TOP,
@@ -15,14 +17,31 @@ public class MoveScreen : MonoBehaviour
 
     void Start()
     {
-        
+        camMoveScript = Camera.main.GetComponent<CameraMove>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("change screen");
+            switch (curBorder)
+            {
+                case BorderType.TOP:
+                    camMoveScript.shift_Up();
+                    break;
+
+                case BorderType.BOTTOM:
+                    camMoveScript.shift_Down();
+                    break;
+
+                case BorderType.LEFT:
+                    camMoveScript.shift_Left();
+                    break;
+
+                case BorderType.RIGHT:
+                    camMoveScript.shift_Right();
+                    break;
+            }
         }
     }
 }
